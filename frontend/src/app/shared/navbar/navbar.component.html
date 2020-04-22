@@ -1,0 +1,64 @@
+<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--top headroom--pinned">
+  <div class="container">
+    <a class="navbar-brand mr-lg-5" [routerLink]="['/home']">
+      <img src="./assets/img/brand/car.png">
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbar_global" [ngbCollapse]="isCollapsed">
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            <a [routerLink]="['/home']">
+              <img src="./assets/img/brand/car.png">
+            </a>
+          </div>
+          <div class="col-6 collapse-close">
+            <button type="button" class="navbar-toggler" (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+     
+      <ul class="navbar-nav ml-lg-auto" *ngIf="authService.isLogged()">
+        <li class="nav-item" *ngIf="!authService.isAdmin()">
+          <a [routerLink]="['/cars']" class="nav-link nav-link-icon" href="">
+            <span class="nav-link-inner--text"> Cars</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAdmin()">
+          <a [routerLink]="['/manage-rents']" class="nav-link nav-link-icon" href="">
+            <span class="nav-link-inner--text ">Orders</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAdmin()">
+          <a [routerLink]="['/manage-roles']" class="nav-link nav-link-icon" href="">
+            <span class="nav-link-inner--text ">Roles</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAdmin()">
+          <a [routerLink]="['/manage-cars']" class="nav-link nav-link-icon" href="">
+            <span class="nav-link-inner--text ">Cars</span>
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="!authService.isAdmin()">
+          <a [routerLink]="['/user-profile']" class="nav-link nav-link-icon" >
+            <span class="nav-link-inner--text ">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/logout']" class="nav-link btn btn-danger"  >
+              Logout
+          </a>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>

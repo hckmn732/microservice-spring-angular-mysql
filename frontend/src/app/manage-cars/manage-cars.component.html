@@ -1,0 +1,204 @@
+<main>
+    <section class="section section-shaped section-lg">
+      <div class="shape shape-style-1 bg-gradient-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </section>
+    
+  <section class="section section-lg">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-lg">
+        <div class="col-lg-8">
+          <h2 class="display-3">Manage cars</h2>
+        </div>
+      </div>
+      <div>
+        <a class="btn btn-success" (click)="open(classic,'' , '')">ADD CAR</a>
+        <ng-template #classic let-c="close" let-d="dismiss">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">ADD NEW CAR</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label> Choose car picture :</label>
+                        <input type="file" ngModel="" name="image"  (change)="onFileSelected($event)" class="form-control"  value="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control"  ngModel=""  placeholder=" Brand " name="brand" type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control"  ngModel="" placeholder=" Model " name="model"  type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" name="plateNumber"  placeholder=" Plate Number " ngModel="" type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                     <div class="form-group ">
+                        <input class="form-control" name="color"  placeholder=" Color " ngModel="" type="text" value="">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" name="description"  placeholder=" Description " ngModel="" type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                     <div class="form-group ">
+                        <input class="form-control" name="price"  placeholder=" Price " ngModel="" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal" (click)="c('Close click')">Close</button>
+                </div>
+              </form>  
+            </div>
+        </ng-template>
+      </div>
+      <br>
+      <div>
+        <table class="table" style=" table-layout: fixed;">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Plate Number</th>
+                <th scope="col">Desciption</th>
+                <th scope="col">Price</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let car of cars">
+                <th scope="row">{{car.id}}</th>
+                <td><img src="{{carsService.getCarPicture(car.id)}}" class="img-center img-fluid " style="width: 90px;"></td>
+                <td>{{car.brand}}</td>
+                <td>{{car.model}}</td>
+                <td>{{car.plateNumber}}</td>
+                <td style="white-space: normal !important; 
+                word-wrap: break-word;  ">{{car.description}}</td>
+                <td>{{car.price}}</td>
+                <th scope="row">  <button class="btn btn-primary" style="width:100% ; margin-bottom: 5px;" (click)="editCar(car.id)"> Edit </button>  <button class="btn btn-danger" (click)="deleteCar(car.id)"> Delete</button></th>
+              </tr>
+             
+            </tbody>
+          </table>
+         
+          <ng-template #defaultEdit let-c="close" let-d="dismiss">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">EDIT CAR</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <form #f2="ngForm" (ngSubmit)="onSubmitEdit(f2.value)">
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label> Choose car picture :</label>
+                        <input type="hidden" [(ngModel)]="idcar" ng-model-options="{ getterSetter: true }" name="id" value="">
+                        <input type="file" ngModel="" name="image"  (change)="onFileSelected($event)" class="form-control"  value="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" [(ngModel)]="brand" ng-model-options="{ getterSetter: true }" placeholder=" Brand " name="brand" type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control"  [(ngModel)]="model" ng-model-options="{ getterSetter: true }" placeholder=" Model " name="model"  type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" name="plateNumber"  placeholder=" Plate Number  "[(ngModel)]="plateNumber" ng-model-options="{ getterSetter: true }" type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                     <div class="form-group ">
+                        <input class="form-control" name="color"  placeholder=" Color " [(ngModel)]="color" ng-model-options="{ getterSetter: true }" type="text" value="">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" name="description"  placeholder=" Description " [(ngModel)]="description" ng-model-options="{ getterSetter: true }" type="text" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                     <div class="form-group ">
+                        <input class="form-control" name="price"  placeholder=" Price " [(ngModel)]="price" ng-model-options="{ getterSetter: true }" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal" (click)="c('Close click')">Close</button>
+                </div>
+              </form>  
+            </div>
+        </ng-template>
+
+      </div>
+    </div>
+  </section>
+  </main>
+  

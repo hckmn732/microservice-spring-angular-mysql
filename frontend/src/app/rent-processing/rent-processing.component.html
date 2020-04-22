@@ -1,0 +1,94 @@
+<main>
+    <section class="section section-shaped section-lg">
+      <div class="shape shape-style-1 bg-gradient-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </section>
+    
+    <section class="section section-lg">
+        <div class="container">
+          <div class="row row-grid align-items-center">
+            <div class="col-md-6 order-md-2">
+              <img src="{{carsService.getCarPicture(carId)}}" class="img-fluid floating">
+            </div>
+            <div class="col-md-6 order-md-1">
+              <div class="pr-md-5">
+                <h3>{{car.brand}} {{car.model}}</h3>
+                <p>
+                  {{car.description}}
+                </p>
+                <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+                    <div class="row">
+                      <input type="hidden" name="idCar" value="{{carId}}">
+                      <div class="input-daterange datepicker row align-items-center">
+                        <div class="col">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                              </div>
+                              <input class="form-control datepicker" placeholder="Select date" name="from" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" (select)="mama($event)" type="text" [dayTemplate]="t" (dateSelect)="startDateChanged($event)" autocomplete="off"/>
+                              <ng-template #t let-date let-focused="focused" >
+                               <span class="custom-day"
+                                [class.text-white]="isActive(date)"
+                                [class.range-end]="isRangeEnd(date)"
+                                [class.range-start]="isRangeStart(date)"
+                                [class.btn-light]="isActive(date)"
+                                [class.bg-primary]="isActive(date)"
+                                [class.range]="isInRange(date)"
+                                [class.faded]="isInRange(date)"
+                               >
+                                 {{ date.day }}
+                               </span>
+                             </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                              </div>
+                              <input class="form-control datepicker" placeholder="Select date" name="to" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker" (click)="d2.toggle()" type="text" [dayTemplate]="t1" (dateSelect)="endDateChanged($event)" autocomplete="off"/>
+                              <ng-template #t1 let-date let-focused="focused" >
+                               <span class="custom-day"
+                                [class.text-white]="isActive(date)"
+                                [class.range-end]="isRangeEnd(date)"
+                                [class.range-start]="isRangeStart(date)"
+                                [class.btn-light]="isActive(date)"
+                                [class.bg-primary]="isActive(date)"
+                                [class.range]="isInRange(date)"
+                                [class.faded]="isInRange(date)"
+                               >
+                                 {{ date.day }}
+                               </span>
+                             </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <center>
+                      <br><br>
+                      <button class="btn btn-icon btn-3 btn-success" type="submit">
+                          <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
+                          <span class="btn-inner--text">RENT</span>
+                      </button>
+                    </center>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+     
+  </main>
+  

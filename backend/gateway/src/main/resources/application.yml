@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name : gateway-authentication
+  cloud:
+    discovery:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/users?createDatabaseIfNotExist=true&useSSL=false
+    username: root
+    password:    
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+zuul:
+  routes:
+    cars:
+      path: /api-cars/**
+      service-id: cars-service
+    rent:
+      path: /api-rent/**
+      service-id: rent-service
